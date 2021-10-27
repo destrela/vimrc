@@ -1,108 +1,107 @@
 set nocompatible
 
-"Vim-plug configurations
-"Specify a directory for plugins
-call plug#begin('/Work/vim.plugged')
-Plug 'tomasr/molokai'
-Plug 'scrooloose/syntastic'
-Plug 'majutsushi/tagbar'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+call plug#begin()
 Plug 'tpope/vim-fugitive'
-Plug 'airblade/vim-gitgutter'
-"Plug 'vim-pandoc/vim-pandoc'
-"Plug 'vim-pandoc/vim-pandoc-after'
-"Plug 'vim-pandoc/vim-pandoc-syntax'
-Plug 'rodjek/vim-puppet'
-Plug 'valloric/youcompleteme'
-Plug 'jdkanani/vim-material-theme'
-Plug 'vim-latex/vim-latex'
-Plug 'tomtom/tlib_vim'
-Plug 'MarcWeber/vim-addon-mw-utils'
-Plug 'garbas/vim-snipmate'
-Plug 'honza/vim-snippets'
-Plug 'dhruvasagar/vim-table-mode'
-Plug 'rlofc/vorg'
+Plug 'scrooloose/nerdtree'
+Plug 'pearofducks/ansible-vim'
+Plug 'vim-airline/vim-airline'
+Plug 'tpope/vim-surround'
+Plug 'morhetz/gruvbox'
+Plug 'hashivim/vim-terraform'
+"Plug 'sheerun/vim-polyglot'
+"Plug 'SirVer/ultisnips'
+"Plug 'honza/vim-snippets'
+"Plug 'turbio/bracey.vim'
+"Plug 'mattn/emmet-vim'
+"Plug 'ycm-core/YouCompleteMe'
+"Plug 'preservim/nerdcommenter'
 call plug#end()
 
-
-syntax enable
+syntax on
 set bg=dark
-colorscheme molokai
-set t_Co=256
-
-set noswapfile
-
 filetype plugin indent on
-
-set backspace=indent,eol,start
-
-set cindent
-set cinoptions=l1,c4,(s,U1,w1,m1,j1,J1
-
-set expandtab
-set smarttab
-set softtabstop=4
-set shiftwidth=4
-set shiftround
-set tabstop=4
+colorscheme gruvbox
+set noswapfile
+set path+=**
 
 set wildmenu
 set wildmode=longest:full,list:full
 
-nmap <silent> <A-k> :wincmd k<CR>
-nmap <silent> <A-j> :wincmd j<CR>
-nmap <silent> <A-h> :wincmd h<CR>
-nmap <silent> <A-l> :wincmd l<CR>
+set ruler
+set showcmd
 
-"settings for snipmate
-imap <C-a> <Plug>snipMateNextOrTrigger
+set incsearch
+set hlsearch
 
-"settings for latexsuite
+"set showmatch
+"hi MatchParen ctermfg=208 ctermbg=blue
 
-set grepprg=grep\ -nH\ $*
-let g:tex_flavor='latex'
-let g:Tex_DefaultTargetFormat='pdf'
-let g:Tex_AdvancedMath=0
-let g:Tex_EnvironmentMaps=0
-let g:Tex_FontMaps=0
-let g:Tex_SectionMaps=0
-let g:Tex_CompileRule_pdf='latexmk -pdf -f $*'
-set iskeyword+=:
+set splitright
+set splitbelow
+
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set shiftround
+set smarttab
+
+set autoindent
+set smartindent
+
+set number
+set relativenumber
+
+set laststatus=2
+set statusline+=%F
+
+" settings for NERDTree
+map <C-n> :NERDTreeToggle<CR>
+autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+
+" settings for ansible-vim
+let g:ansible_unindent_after_newline=1
 
 "settings for airline
 set laststatus=2
-let g:airline_powerline_fonts = 1
+let g:airline_powerline_fonts = 0
 let g:airline#extensions#tabline#enabled = 1
 "let g:airline_theme='powerlineish'
-let g:airline_theme='bubblegum'
 
-"settings for pandoc
-let g:pandoc#syntax#conceal#use=0
+"settings for ultisnip
+"let g:UltiSnipsExpandTrigger="<tab>"
+"let g:UltiSnipsJumpForwardTrigger="<c-b>"
+"let g:UltiSnipsJumpBackwardTrigger="<c-z>"
+"let g:UltiSnipsEditSplit="vertical"
 
-"settings for tmuxline
-"let g:airline#extensions#tmuxline#enable = 1
-"let airline#extensions#tmuxline#snapshot_file = "~/.config/tmux/tmux-statusline-color.conf"
-"let airline#extensions#promptline#snapshot_file = "~/.shell_tmuxprompt.sh"
-"let g:airline#extensions#promptline#enabled = 1
+"settings for bracey
+let g:bracey_refresh_on_save=1
 
-" settings for NERDTree
-"map <C-n> :NERDTreeToggle<CR>
-"autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
+"settings for Emmet
+let g:user_emmet_leader_key='<C-Z>'
+let g:user_emmet_install_global = 0
+autocmd FileType html,css EmmetInstall
 
-" settings for syntastic
-let g:syntastic_error_symbol = "✗"
-let g:syntastic_warning_symbol = "⚠"
+"settings for YCM
+let g:ycm_autoclose_preview_window_after_completion=1
 
-" settings for vim-table-mode
-" get ReST-compatible table
-let g:table_mode_corner_corner='+'
-let g:table_mode_header_fillchar='='
+"setting for vim-terraform
+"Allow vim-terraform to align settings automatically with Tabularize.
+let g:terraform_align=1
+let g:terraform_fmt_on_save=1
 
-" settings for c++ IDE
-set exrc
-set secure
+"remapping C-w to deal better with windows
+nnoremap <Leader>w <C-w>
+nnoremap <C-Right> <C-w>l
+nnoremap <C-Left> <C-w>h
+nnoremap <C-Up> <C-w>k
+nnoremap <C-Down> <C-w>j
+nnoremap <C-N> <C-w>N
 
-"setting for spell check
-map <Leader>s <Esc>:!aspell -c --dont-backup "%"<CR>:e! "%"<CR><CR>
-
+"settings for auto closes brakets
+"inoremap " ""<left>
+"inoremap ' ''<left>
+"inoremap ( ()<left>
+"inoremap [ []<left>
+"inoremap { {}<left>
+"inoremap {<CR> {<CR>}<ESC>O
+"inoremap {;<CR> {<CR>};<ESC>O
